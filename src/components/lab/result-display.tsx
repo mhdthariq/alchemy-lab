@@ -1,4 +1,8 @@
-import { Reaction, getDifficultyColor, getEnergyChangeColor } from "@/lib/data";
+import {
+  Reaction,
+  getDifficultyColor,
+  getEnergyChangeColor,
+} from "@/lib/data-original";
 
 interface ResultDisplayProps {
   result: Reaction | "fizzled" | null;

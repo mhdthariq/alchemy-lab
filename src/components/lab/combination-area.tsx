@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Element, Reaction, getReaction } from "@/lib/data";
+import { Element, Reaction, getReaction } from "@/lib/data-original";
 import { ReactionAnimation } from "../animations/reaction-animation";
 
 interface CombinationAreaProps {

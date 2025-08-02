@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { elements } from "@/lib/data";
+import { elements } from "@/lib/data-original";
 
 export const createAlloyAnimation = (group: THREE.Group) => {
   // Get element data for Gold and Silver
