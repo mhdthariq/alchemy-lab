@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Element } from "@/lib/data";
+import { Element, Reaction, getReaction } from "@/lib/data";
+import { ReactionAnimation } from "../animations/reaction-animation";
 
 interface CombinationAreaProps {
   selectedElements: (Element | null)[];
@@ -141,8 +142,13 @@ export const CombinationArea = ({
 }: CombinationAreaProps) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [showReactionHint, setShowReactionHint] = useState(false);
+  const [showAnimation, setShowAnimation] = useState(false);
+  const [currentReaction, setCurrentReaction] = useState<Reaction | null>(null);
 
   const canCombine = selectedElements[0] && selectedElements[1];
+  const reaction = canCombine
+    ? getReaction(selectedElements[0]!.symbol, selectedElements[1]!.symbol)
+    : null;
 
   useEffect(() => {
     if (canCombine) {
@@ -155,13 +161,17 @@ export const CombinationArea = ({
   }, [canCombine]);
 
   const handleCombine = () => {
-    if (canCombine) {
+    if (canCombine && reaction) {
       setIsAnimating(true);
-      setTimeout(() => {
-        onCombine();
-        setIsAnimating(false);
-      }, 1000);
+      setCurrentReaction(reaction);
+      setShowAnimation(true);
     }
+  };
+
+  const handleAnimationComplete = () => {
+    setShowAnimation(false);
+    setIsAnimating(false);
+    onCombine();
   };
 
   const getReactionPreview = () => {
@@ -170,11 +180,31 @@ export const CombinationArea = ({
     const element1 = selectedElements[0]!;
     const element2 = selectedElements[1]!;
 
+    if (reaction) {
+      return `${element1.symbol} + ${element2.symbol} → ${reaction.productFormula}`;
+    }
     return `${element1.symbol} + ${element2.symbol} → ?`;
   };
 
   return (
     <div className="space-y-6">
+      {/* Show Animation */}
+      {showAnimation &&
+        currentReaction &&
+        selectedElements[0] &&
+        selectedElements[1] && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center">
+            <div className="bg-gray-900 rounded-lg p-6 max-w-2xl w-full mx-4">
+              <ReactionAnimation
+                element1={selectedElements[0]}
+                element2={selectedElements[1]}
+                reaction={currentReaction}
+                onComplete={handleAnimationComplete}
+              />
+            </div>
+          </div>
+        )}
+
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-cyan-400 flex items-center gap-2">
           <span className="text-3xl">🧪</span>
@@ -184,8 +214,19 @@ export const CombinationArea = ({
         {/* Reaction Preview */}
         {canCombine && (
           <div className="hidden sm:block">
-            <div className="text-sm font-mono text-gray-300 bg-gray-800 px-3 py-1 rounded-lg border border-gray-600">
+            <div
+              className={`text-sm font-mono px-3 py-1 rounded-lg border ${
+                reaction
+                  ? "text-green-300 bg-green-900/20 border-green-600/30"
+                  : "text-yellow-300 bg-yellow-900/20 border-yellow-600/30"
+              }`}
+            >
               {getReactionPreview()}
+              {!reaction && (
+                <div className="text-xs text-yellow-200 mt-1">
+                  Unknown reaction - experiment to discover!
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -266,7 +307,9 @@ export const CombinationArea = ({
             focus:outline-none focus:ring-4 focus:ring-cyan-400/50 relative overflow-hidden
             ${
               canCombine && !isAnimating
-                ? "bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 transform hover:scale-105 shadow-lg shadow-cyan-600/30"
+                ? reaction
+                  ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 transform hover:scale-105 shadow-lg shadow-green-600/30"
+                  : "bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 transform hover:scale-105 shadow-lg shadow-yellow-600/30"
                 : "bg-gray-600 cursor-not-allowed"
             }
             ${isAnimating ? "animate-pulse" : ""}
@@ -284,7 +327,11 @@ export const CombinationArea = ({
             ) : (
               <>
                 <span className="text-xl">⚗️</span>
-                {canCombine ? "Combine Elements!" : "Select Two Elements"}
+                {canCombine
+                  ? reaction
+                    ? `Create ${reaction.productName}!`
+                    : "Experiment & Discover!"
+                  : "Select Two Elements"}
               </>
             )}
           </span>
@@ -316,14 +363,67 @@ export const CombinationArea = ({
         </div>
       )}
 
+      {/* Reaction Info */}
+      {canCombine && reaction && (
+        <div className="mt-4 p-4 bg-gradient-to-r from-green-900/20 to-emerald-900/20 rounded-lg border border-green-600/30">
+          <div className="text-sm text-green-200 mb-2 font-semibold">
+            Known Reaction: {reaction.productName}
+          </div>
+          <div className="text-xs text-green-300 mb-2">
+            {reaction.description}
+          </div>
+          <div className="flex items-center gap-4 text-xs">
+            <span
+              className={`px-2 py-1 rounded ${
+                reaction.energyChange === "exothermic"
+                  ? "bg-red-600/20 text-red-200"
+                  : "bg-blue-600/20 text-blue-200"
+              }`}
+            >
+              {reaction.energyChange === "exothermic"
+                ? "🔥 Releases Heat"
+                : "❄️ Absorbs Heat"}
+            </span>
+            <span
+              className={`px-2 py-1 rounded ${
+                reaction.difficulty === "easy"
+                  ? "bg-green-600/20 text-green-200"
+                  : reaction.difficulty === "moderate"
+                    ? "bg-yellow-600/20 text-yellow-200"
+                    : reaction.difficulty === "hard"
+                      ? "bg-red-600/20 text-red-200"
+                      : "bg-purple-600/20 text-purple-200"
+              }`}
+            >
+              {reaction.difficulty.charAt(0).toUpperCase() +
+                reaction.difficulty.slice(1)}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Unknown Reaction */}
+      {canCombine && !reaction && (
+        <div className="mt-4 p-3 bg-gradient-to-r from-yellow-900/20 to-orange-900/20 rounded-lg border border-yellow-600/30">
+          <div className="text-xs text-yellow-200 flex items-center gap-2">
+            <span>🔬</span>
+            <span>
+              Unknown reaction! Click to experiment and see what happens. Some
+              combinations might not react under normal conditions.
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* Fun Tips */}
-      {canCombine && (
+      {!canCombine && (
         <div className="mt-4 p-3 bg-gradient-to-r from-purple-900/20 to-pink-900/20 rounded-lg border border-purple-600/30">
           <div className="text-xs text-purple-200 flex items-center gap-2">
             <span>💡</span>
             <span>
               Tip: Different element combinations create different types of
-              bonds and reactions!
+              bonds and reactions! Try mixing metals with nonmetals, or explore
+              noble gas behavior.
             </span>
           </div>
         </div>

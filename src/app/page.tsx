@@ -262,10 +262,7 @@ export default function LabPage() {
             {/* Left Panel - Element Selection */}
             <div className="xl:col-span-3 space-y-8">
               <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 shadow-xl">
-                <ElementSelector
-                  elements={Object.values(elements)}
-                  onSelect={handleSelectElement}
-                />
+                <ElementSelector onSelect={handleSelectElement} />
               </div>
 
               {/* 3D Visualization */}
