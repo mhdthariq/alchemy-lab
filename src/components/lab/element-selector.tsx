@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Element, getAllElements, getElementsByCategory } from "@/lib/data";
 
 interface ElementSelectorProps {
-  onSelect: (element: Element) => void;
+  selectElementAction: (element: Element) => void;
 }
 
 const categoryColors: Record<Element["category"], string> = {
@@ -49,7 +49,9 @@ const getElementPosition = (element: Element): { row: number; col: number } => {
   return { row: period, col: group };
 };
 
-export const ElementSelector = ({ onSelect }: ElementSelectorProps) => {
+export const ElementSelector = ({
+  selectElementAction,
+}: ElementSelectorProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [hoveredElement, setHoveredElement] = useState<Element | null>(null);
@@ -111,7 +113,7 @@ export const ElementSelector = ({ onSelect }: ElementSelectorProps) => {
               return (
                 <div key={element.symbol} className="relative">
                   <button
-                    onClick={() => onSelect(element)}
+                    onClick={() => selectElementAction(element)}
                     onMouseEnter={() => setHoveredElement(element)}
                     onMouseLeave={() => setHoveredElement(null)}
                     disabled={!isFiltered}
@@ -200,7 +202,7 @@ export const ElementSelector = ({ onSelect }: ElementSelectorProps) => {
       {filteredElements.map((element) => (
         <div key={element.symbol} className="relative">
           <button
-            onClick={() => onSelect(element)}
+            onClick={() => selectElementAction(element)}
             onMouseEnter={() => setHoveredElement(element)}
             onMouseLeave={() => setHoveredElement(null)}
             className="group w-full p-4 bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 hover:border-cyan-500 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/20 focus:outline-none focus:ring-2 focus:ring-cyan-400"
