@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { elements } from "@/lib/data-original";
+import { elements } from "@/lib/data";
 
 export const createCarbonMonoxideAnimation = (group: THREE.Group) => {
   // Get element data

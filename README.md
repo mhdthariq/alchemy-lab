@@ -59,14 +59,14 @@ A modern, interactive chemistry laboratory where you can explore the fascinating
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn package manager
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/interactive-alchemy-lab.git
+   git clone https://github.com/mhdthariq/alchemy-lab.git
    cd interactive-alchemy-lab
    ```
 
@@ -190,7 +190,7 @@ interface Reaction {
 
 ### Color Palette
 - **Primary**: Cyan (#06b6d4) - Science and technology
-- **Secondary**: Blue (#3b82f6) - Trust and stability  
+- **Secondary**: Blue (#3b82f6) - Trust and stability
 - **Accent**: Purple (#8b5cf6) - Innovation and creativity
 - **Success**: Green (#10b981) - Successful reactions
 - **Warning**: Yellow (#f59e0b) - Caution and attention

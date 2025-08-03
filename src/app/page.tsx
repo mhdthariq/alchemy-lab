@@ -5,8 +5,8 @@ import { ElementSelector } from "@/components/lab/element-selector";
 import { CombinationArea } from "@/components/lab/combination-area";
 import { ResultDisplay } from "@/components/lab/result-display";
 import { CanvasWrapper } from "@/scenes/canvas-wrapper";
-import { elements, reactions, getRandomElement } from "@/lib/data-original";
-import type { Element, Reaction } from "@/lib/data-original";
+import { elements, reactions, getRandomElement } from "@/lib/data";
+import type { Element, Reaction } from "@/lib/data";
 
 export default function LabPage() {
   // State for the two selected elements

@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Element,
-  getAllElements,
-  getElementsByCategory,
-} from "@/lib/data-original";
+import { Element, getAllElements, getElementsByCategory } from "@/lib/data";
 
 interface ElementSelectorProps {
   onSelect: (element: Element) => void;
