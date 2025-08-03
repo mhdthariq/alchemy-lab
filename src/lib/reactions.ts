@@ -161,7 +161,7 @@ export const reactions: Record<string, Reaction> = {
     productFormula: "Al₂O₃",
     description:
       "Forms sapphires and rubies when pure. Used in abrasives and ceramics.",
-    animation: "aluminumOxide",
+    animation: "crystal",
     type: "synthesis",
     balancedEquation: "4Al + 3O₂ → 2Al₂O₃",
     energyChange: "exothermic",
@@ -176,7 +176,7 @@ export const reactions: Record<string, Reaction> = {
     productFormula: "CaO",
     description:
       "Used in cement and steel production. Reacts violently with water to form slaked lime.",
-    animation: "calciumOxide",
+    animation: "magnesiumOxide",
     type: "combustion",
     balancedEquation: "2Ca + O₂ → 2CaO",
     energyChange: "exothermic",
@@ -221,7 +221,7 @@ export const reactions: Record<string, Reaction> = {
     productFormula: "SiO₂",
     description:
       "The main component of sand, quartz, and glass. Forms beautiful crystal structures.",
-    animation: "siliconDioxide",
+    animation: "crystal",
     type: "synthesis",
     balancedEquation: "Si + O₂ → SiO₂",
     energyChange: "exothermic",
@@ -237,7 +237,7 @@ export const reactions: Record<string, Reaction> = {
     productFormula: "H₂S",
     description:
       "A toxic gas with the smell of rotten eggs. Found in volcanic gases and swamps.",
-    animation: "hydrogenSulfide",
+    animation: "dangerous",
     type: "synthesis",
     balancedEquation: "H₂ + S → H₂S",
     energyChange: "exothermic",
@@ -252,7 +252,7 @@ export const reactions: Record<string, Reaction> = {
     productFormula: "SO₂",
     description:
       "A choking gas that causes acid rain. Produced by burning sulfur-containing fuels.",
-    animation: "sulfurDioxide",
+    animation: "dangerous",
     type: "combustion",
     balancedEquation: "S + O₂ → SO₂",
     energyChange: "exothermic",
@@ -268,7 +268,7 @@ export const reactions: Record<string, Reaction> = {
     productFormula: "P₂O₅",
     description:
       "An extremely powerful dehydrating agent that absorbs water from the air.",
-    animation: "phosphorusPentoxide",
+    animation: "dangerous",
     type: "combustion",
     balancedEquation: "4P + 5O₂ → 2P₂O₅",
     energyChange: "exothermic",
@@ -392,7 +392,7 @@ export const reactions: Record<string, Reaction> = {
     productName: "Lanthanum Oxide",
     productFormula: "La₂O₃",
     description: "White powder used in optical glasses and catalysts.",
-    animation: "rareEarthOxide",
+    animation: "crystal",
     type: "synthesis",
     balancedEquation: "4La + 3O₂ → 2La₂O₃",
     energyChange: "exothermic",
@@ -503,7 +503,7 @@ export const reactions: Record<string, Reaction> = {
     productName: "Titanium Dioxide",
     productFormula: "TiO₂",
     description: "White pigment in paint and sunscreen.",
-    animation: "titaniumOxide",
+    animation: "crystal",
     type: "synthesis",
     balancedEquation: "Ti + O₂ → TiO₂",
     energyChange: "exothermic",
@@ -517,7 +517,7 @@ export const reactions: Record<string, Reaction> = {
     productName: "Zinc Oxide",
     productFormula: "ZnO",
     description: "White pigment and UV blocker in sunscreen.",
-    animation: "zincOxide",
+    animation: "crystal",
     type: "synthesis",
     balancedEquation: "2Zn + O₂ → 2ZnO",
     energyChange: "exothermic",
@@ -572,9 +572,7 @@ export const getEnergyChangeColor = (
   }
 };
 
-export const getReactionsByType = (
-  type: Reaction["type"],
-): Reaction[] => {
+export const getReactionsByType = (type: Reaction["type"]): Reaction[] => {
   return Object.values(reactions).filter((reaction) => reaction.type === type);
 };
 
