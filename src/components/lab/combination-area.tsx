@@ -37,15 +37,17 @@ const ElementSlot = ({
   return (
     <div className="relative">
       {/* Slot Label */}
-      <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-400 font-semibold">
-        Element {slotNumber}
+      <div className="mb-3 text-center">
+        <span className="text-sm text-gray-300 font-semibold bg-gray-800/80 px-3 py-1 rounded-full border border-gray-600/50">
+          Element {slotNumber}
+        </span>
       </div>
 
       <div
         className={`
-          relative w-full h-32 lg:h-36 border-2 border-dashed rounded-xl
+          relative w-full h-36 lg:h-40 border-2 border-dashed rounded-xl
           flex items-center justify-center transition-all duration-500 overflow-hidden
-          ${element ? "border-solid shadow-lg" : ""}
+          ${element ? "border-solid shadow-lg" : "border-gray-500/50"}
           ${isHovered ? "scale-105" : ""}
           ${justAdded ? "animate-pulse" : ""}
           ${isAnimating ? "animate-bounce" : ""}
@@ -105,10 +107,12 @@ const ElementSlot = ({
             ></div>
           </div>
         ) : (
-          <div className="text-center text-gray-500">
-            <div className="text-4xl mb-2">⚪</div>
-            <span className="text-sm">Empty Slot</span>
-            <div className="text-xs mt-1 opacity-70">Select an element</div>
+          <div className="text-center text-gray-400">
+            <div className="text-5xl mb-3 opacity-50">⚫</div>
+            <span className="text-sm font-medium">Empty Slot</span>
+            <div className="text-xs mt-2 opacity-70 bg-gray-700/50 px-2 py-1 rounded">
+              Select an element from above
+            </div>
           </div>
         )}
 
@@ -141,7 +145,6 @@ export const CombinationArea = ({
   onReset,
 }: CombinationAreaProps) => {
   const [isAnimating, setIsAnimating] = useState(false);
-  const [showReactionHint, setShowReactionHint] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
   const [currentReaction, setCurrentReaction] = useState<Reaction | null>(null);
 
@@ -149,16 +152,6 @@ export const CombinationArea = ({
   const reaction = canCombine
     ? getReaction(selectedElements[0]!.symbol, selectedElements[1]!.symbol)
     : null;
-
-  useEffect(() => {
-    if (canCombine) {
-      setShowReactionHint(true);
-      const timer = setTimeout(() => setShowReactionHint(false), 3000);
-      return () => clearTimeout(timer);
-    } else {
-      setShowReactionHint(false);
-    }
-  }, [canCombine]);
 
   const handleCombine = () => {
     if (canCombine) {
@@ -254,8 +247,8 @@ export const CombinationArea = ({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8">
+      <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-cyan-400 flex items-center gap-2">
           <span className="text-3xl">🧪</span>
           Combine Elements
@@ -283,8 +276,8 @@ export const CombinationArea = ({
       </div>
 
       {/* Combination Slots */}
-      <div className="relative">
-        <div className="flex items-center gap-6">
+      <div className="relative mt-6">
+        <div className="flex items-center gap-6 lg:gap-8">
           {/* First Element Slot */}
           <div className="flex-1">
             <ElementSlot
@@ -295,12 +288,13 @@ export const CombinationArea = ({
           </div>
 
           {/* Plus Symbol with Animation */}
-          <div className="relative flex-shrink-0">
+          <div className="relative flex-shrink-0 mx-2">
             <div
               className={`
-              text-4xl font-bold text-gray-400 transition-all duration-500
-              ${isAnimating ? "text-cyan-400 scale-125 animate-spin" : ""}
-              ${canCombine ? "text-cyan-500" : ""}
+              w-16 h-16 rounded-full border-2 border-dashed flex items-center justify-center
+              text-4xl font-bold transition-all duration-500
+              ${isAnimating ? "text-cyan-400 scale-125 animate-spin border-cyan-400" : ""}
+              ${canCombine ? "text-cyan-500 border-cyan-500" : "text-gray-400 border-gray-500"}
             `}
             >
               +
@@ -333,18 +327,6 @@ export const CombinationArea = ({
             />
           </div>
         </div>
-
-        {/* Reaction Hint */}
-        {showReactionHint && (
-          <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <div className="bg-cyan-900 text-cyan-100 px-4 py-2 rounded-lg text-sm border border-cyan-600 shadow-lg">
-              <div className="flex items-center gap-2">
-                <span>✨</span>
-                Ready to react!
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Inline Animation */}
@@ -369,7 +351,8 @@ export const CombinationArea = ({
           disabled={!canCombine || isAnimating}
           className={`
             w-full px-6 py-4 rounded-xl font-bold text-white transition-all duration-300
-            focus:outline-none focus:ring-4 focus:ring-cyan-400/50 relative overflow-hidden
+            focus:outline-none focus:ring-0 focus:border-transparent active:outline-none
+            border-0 outline-none relative overflow-hidden
             ${
               canCombine && !isAnimating
                 ? reaction
@@ -379,6 +362,7 @@ export const CombinationArea = ({
             }
             ${isAnimating ? "animate-pulse" : ""}
           `}
+          style={{ outline: "none", border: "none", boxShadow: "none" }}
         >
           {/* Button Background Effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
