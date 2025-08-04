@@ -1,0 +1,23 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="16" height="16" fill="#0f172a"/>
+
+  <!-- Flask body -->
+  <path d="M6 10L5 14H11L10 10V6H9V4H7V6H6V10Z" fill="#06b6d4"/>
+
+  <!-- Liquid in flask -->
+  <path d="M6.2 10.2L5.2 13.5H10.8L9.8 10.2V6.5H6.2V10.2Z" fill="#22d3ee" opacity="0.8"/>
+
+  <!-- Bubbles -->
+  <circle cx="7.5" cy="11" r="0.5" fill="#67e8f9"/>
+  <circle cx="8.5" cy="9.5" r="0.3" fill="#67e8f9" opacity="0.8"/>
+
+  <!-- Atom orbit -->
+  <circle cx="8" cy="8" r="3" fill="none" stroke="#fbbf24" stroke-width="0.5" opacity="0.6"/>
+
+  <!-- Nucleus -->
+  <circle cx="8" cy="8" r="0.8" fill="#f59e0b"/>
+
+  <!-- Plus symbol -->
+  <text x="2" y="5" font-family="Arial" font-size="3" font-weight="bold" fill="#10b981">+</text>
+</svg>

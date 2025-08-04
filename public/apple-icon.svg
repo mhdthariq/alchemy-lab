@@ -1,0 +1,42 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="90" cy="90" r="90" fill="#0f172a"/>
+
+  <!-- Outer glow -->
+  <circle cx="90" cy="90" r="85" fill="none" stroke="#06b6d4" stroke-width="2" opacity="0.6"/>
+
+  <!-- Flask body -->
+  <path d="M67.5 112.5L56.25 146.25C55.5 148.5 57.375 151.875 60.75 151.875H119.25C122.625 151.875 124.5 148.5 123.75 146.25L112.5 112.5V67.5H106.875V45C106.875 41.625 104.125 39.375 101.25 39.375H78.75C75.875 39.375 73.125 41.625 73.125 45V67.5H67.5V112.5Z" fill="#06b6d4"/>
+
+  <!-- Flask neck -->
+  <rect x="78.75" y="39.375" width="22.5" height="28.125" fill="#0891b2"/>
+
+  <!-- Liquid in flask -->
+  <path d="M70.3125 115.3125L60.75 143.4375H119.25L109.6875 115.3125V73.125H70.3125V115.3125Z" fill="#22d3ee" opacity="0.8"/>
+
+  <!-- Bubbles -->
+  <circle cx="84.375" cy="123.75" r="5.625" fill="#67e8f9" opacity="0.9"/>
+  <circle cx="98.4375" cy="106.875" r="4.5" fill="#67e8f9" opacity="0.7"/>
+  <circle cx="78.75" cy="95.625" r="3.375" fill="#67e8f9" opacity="0.8"/>
+  <circle cx="103.125" cy="129.375" r="3.75" fill="#67e8f9" opacity="0.6"/>
+
+  <!-- Atomic symbol overlay -->
+  <circle cx="90" cy="84.375" r="33.75" fill="none" stroke="#fbbf24" stroke-width="4.5" opacity="0.6"/>
+  <circle cx="90" cy="84.375" r="16.875" fill="none" stroke="#fbbf24" stroke-width="3.375" opacity="0.8"/>
+
+  <!-- Electron dots -->
+  <circle cx="123.75" cy="84.375" r="5.625" fill="#fbbf24" opacity="0.9"/>
+  <circle cx="56.25" cy="84.375" r="5.625" fill="#fbbf24" opacity="0.9"/>
+  <circle cx="90" cy="50.625" r="5.625" fill="#fbbf24" opacity="0.7"/>
+  <circle cx="90" cy="118.125" r="5.625" fill="#fbbf24" opacity="0.7"/>
+
+  <!-- Central nucleus -->
+  <circle cx="90" cy="84.375" r="8.4375" fill="#f59e0b"/>
+
+  <!-- Plus symbol for combination -->
+  <text x="39.375" y="56.25" font-family="Arial" font-size="33.75" font-weight="bold" fill="#10b981">+</text>
+
+  <!-- Chemical element symbols -->
+  <text x="135" y="45" font-family="Arial" font-size="16.875" font-weight="bold" fill="#06b6d4" opacity="0.8">H</text>
+  <text x="28.125" y="140.625" font-family="Arial" font-size="13.5" font-weight="bold" fill="#10b981" opacity="0.8">O</text>
+</svg>
