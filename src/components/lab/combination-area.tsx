@@ -161,11 +161,78 @@ export const CombinationArea = ({
   }, [canCombine]);
 
   const handleCombine = () => {
-    if (canCombine && reaction) {
+    if (canCombine) {
       setIsAnimating(true);
-      setCurrentReaction(reaction);
+
+      if (reaction) {
+        // Known reaction
+        setCurrentReaction(reaction);
+      } else {
+        // Unknown reaction - create a discovery reaction
+        const element1 = selectedElements[0]!;
+        const element2 = selectedElements[1]!;
+
+        const discoveryReaction: Reaction = {
+          productName: "Unknown Combination",
+          productFormula: `${element1.symbol} + ${element2.symbol}`,
+          description: `This combination of ${element1.name} and ${element2.name} doesn't form a stable compound under normal laboratory conditions. This teaches us about chemical bonding principles and element properties!`,
+          animation: "impossible",
+          type: "synthesis",
+          balancedEquation: `${element1.symbol} + ${element2.symbol} → No Reaction`,
+          energyChange: "endothermic",
+          difficulty: "easy",
+          realWorld: false,
+          explanation: getDiscoveryExplanation(element1, element2),
+        };
+
+        setCurrentReaction(discoveryReaction);
+      }
+
       setShowAnimation(true);
     }
+  };
+
+  const getDiscoveryExplanation = (
+    element1: Element,
+    element2: Element,
+  ): string => {
+    // Check if both are noble gases
+    if (
+      element1.category === "noble-gas" &&
+      element2.category === "noble-gas"
+    ) {
+      return "Noble gases have complete electron shells and are extremely stable, making them reluctant to form chemical bonds with other elements.";
+    }
+
+    // Check if one or both are noble gases
+    if (
+      element1.category === "noble-gas" ||
+      element2.category === "noble-gas"
+    ) {
+      return "Noble gases are chemically inert due to their complete electron shells. They rarely form compounds except under extreme conditions.";
+    }
+
+    // Check if both are nonmetals of similar electronegativity
+    if (element1.category === "nonmetal" && element2.category === "nonmetal") {
+      return "Some nonmetal combinations require specific conditions like high temperature, pressure, or catalysts to react.";
+    }
+
+    // Check if both are metals
+    if (
+      (element1.category === "alkali" ||
+        element1.category === "alkaline-earth" ||
+        element1.category === "transition-metal" ||
+        element1.category === "post-transition-metal") &&
+      (element2.category === "alkali" ||
+        element2.category === "alkaline-earth" ||
+        element2.category === "transition-metal" ||
+        element2.category === "post-transition-metal")
+    ) {
+      return "Metals typically form alloys rather than chemical compounds. They may mix physically but don't always create new chemical bonds.";
+    }
+
+    // Default explanation
+    return "Not all element combinations form stable compounds. Factors like electron configuration, atomic size, and electronegativity differences determine if elements will react.";
   };
 
   const handleAnimationComplete = () => {
@@ -188,23 +255,6 @@ export const CombinationArea = ({
 
   return (
     <div className="space-y-6">
-      {/* Show Animation */}
-      {showAnimation &&
-        currentReaction &&
-        selectedElements[0] &&
-        selectedElements[1] && (
-          <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center">
-            <div className="bg-gray-900 rounded-lg p-6 max-w-2xl w-full mx-4">
-              <ReactionAnimation
-                element1={selectedElements[0]}
-                element2={selectedElements[1]}
-                reaction={currentReaction}
-                onComplete={handleAnimationComplete}
-              />
-            </div>
-          </div>
-        )}
-
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-cyan-400 flex items-center gap-2">
           <span className="text-3xl">🧪</span>
@@ -296,6 +346,21 @@ export const CombinationArea = ({
           </div>
         )}
       </div>
+
+      {/* Inline Animation */}
+      {showAnimation &&
+        currentReaction &&
+        selectedElements[0] &&
+        selectedElements[1] && (
+          <div className="my-4">
+            <ReactionAnimation
+              element1={selectedElements[0]}
+              element2={selectedElements[1]}
+              reaction={currentReaction}
+              onComplete={handleAnimationComplete}
+            />
+          </div>
+        )}
 
       {/* Action Buttons */}
       <div className="space-y-3">
