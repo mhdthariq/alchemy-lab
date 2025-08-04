@@ -72,25 +72,25 @@ const ElementSlot = ({
         </div>
 
         {element ? (
-          <div className="relative text-center z-10">
+          <div className="relative w-full h-full flex flex-col justify-center items-center z-10">
             {/* Atomic Number */}
             <div className="absolute -top-2 -left-2 text-xs font-mono text-gray-400 bg-gray-800 rounded px-1">
               {element.atomicNumber}
             </div>
 
-            {/* Element Symbol */}
-            <div className="font-extrabold text-4xl lg:text-5xl text-white mb-1 drop-shadow-lg">
+            {/* Category Badge - Top Left */}
+            <div className="absolute top-2 left-2 text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full">
+              {element.category}
+            </div>
+
+            {/* Element Symbol - Center */}
+            <div className="font-extrabold text-4xl lg:text-5xl text-white drop-shadow-lg">
               {element.symbol}
             </div>
 
-            {/* Element Name */}
-            <div className="text-sm text-gray-200 font-medium">
+            {/* Element Name - Bottom Center */}
+            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 text-sm text-gray-200 font-medium">
               {element.name}
-            </div>
-
-            {/* Category Badge */}
-            <div className="absolute -bottom-2 -right-2 text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full">
-              {element.category}
             </div>
 
             {/* Alchemical Symbol if available */}
